@@ -148,11 +148,11 @@ RCT_EXPORT_METHOD(createTemplate:(NSString *)templateId config:(NSDictionary*)co
         CPListTemplate *listTemplate = [[CPListTemplate alloc] initWithTitle:title sections:sections];
         [listTemplate setLeadingNavigationBarButtons:leadingNavigationBarButtons];
         [listTemplate setTrailingNavigationBarButtons:trailingNavigationBarButtons];
-        CPBarButton *backButton = [[CPBarButton alloc] initWithTitle:@" Back" handler:^(CPBarButton * _Nonnull barButton) {
-            [self sendEventWithName:@"backButtonPressed" body:@{@"templateId":templateId}];
-            [self popTemplate:false];
-        }];
-        [listTemplate setBackButton:backButton];
+        //CPBarButton *backButton = [[CPBarButton alloc] initWithTitle:@" Back" handler:^(CPBarButton * _Nonnull barButton) {
+        //    [self sendEventWithName:@"backButtonPressed" body:@{@"templateId":templateId}];
+        //    [self popTemplate:false];
+        //}];
+        //[listTemplate setBackButton:backButton];
         if (config[@"emptyViewTitleVariants"]) {
             listTemplate.emptyViewTitleVariants = [RCTConvert NSArray:config[@"emptyViewTitleVariants"]];
         }
