@@ -148,11 +148,11 @@ RCT_EXPORT_METHOD(createTemplate:(NSString *)templateId config:(NSDictionary*)co
         CPListTemplate *listTemplate = [[CPListTemplate alloc] initWithTitle:title sections:sections];
         [listTemplate setLeadingNavigationBarButtons:leadingNavigationBarButtons];
         [listTemplate setTrailingNavigationBarButtons:trailingNavigationBarButtons];
-        //CPBarButton *backButton = [[CPBarButton alloc] initWithTitle:@" Back" handler:^(CPBarButton * _Nonnull barButton) {
-        //    [self sendEventWithName:@"backButtonPressed" body:@{@"templateId":templateId}];
-        //    [self popTemplate:false];
-        //}];
-        //[listTemplate setBackButton:backButton];
+        CPBarButton *backButton = [[CPBarButton alloc] initWithTitle:@" Back" handler:^(CPBarButton * _Nonnull barButton) {
+            [self sendEventWithName:@"backButtonPressed" body:@{@"templateId":templateId}];
+            [self popTemplate:false];
+        }];
+        [listTemplate setBackButton:backButton];
         if (config[@"emptyViewTitleVariants"]) {
             listTemplate.emptyViewTitleVariants = [RCTConvert NSArray:config[@"emptyViewTitleVariants"]];
         }
@@ -369,6 +369,8 @@ RCT_EXPORT_METHOD(setRootTemplate:(NSString *)templateId animated:(BOOL)animated
     store.interfaceController.delegate = self;
 
     if (template) {
+        [template setBackButton:NULL];
+        
         [store.interfaceController setRootTemplate:template animated:animated completion:^(BOOL done, NSError * _Nullable err) {
             NSLog(@"error %@", err);
             // noop
@@ -669,7 +671,7 @@ RCT_EXPORT_METHOD(updateMapTemplateMapButtons:(NSString*) templateId mapButtons:
         NSArray *leadingNavigationBarButtons = [self parseBarButtons:[RCTConvert NSArray:config[@"leadingNavigationBarButtons"]] templateId:templateId];
         [mapTemplate setLeadingNavigationBarButtons:leadingNavigationBarButtons];
     }
-  
+
     if ([config objectForKey:@"trailingNavigationBarButtons"]){
         NSArray *trailingNavigationBarButtons = [self parseBarButtons:[RCTConvert NSArray:config[@"trailingNavigationBarButtons"]] templateId:templateId];
         [mapTemplate setTrailingNavigationBarButtons:trailingNavigationBarButtons];
